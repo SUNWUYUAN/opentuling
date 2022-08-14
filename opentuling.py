@@ -25,6 +25,7 @@ def get_cookie():
     global first_run
     if first_run == 1:
         cookie = input("你的请求头cookies:")
+        first_run = 0
     return cookie
 
 
@@ -95,7 +96,6 @@ def brush_project():
 # 刷评论
 def brush_comment():
     urll = input("请输入你要刷屏的作品网址：")[-32::]
-    cookie = input("请输入您的请求头cookies")
     text = []
     n = int(input("要有多少个随机刷屏词？"))
     for i in range(n):
@@ -105,8 +105,8 @@ def brush_comment():
     print(text)
     while True:
         k = random.randint(0, n-1)
-        requests.post(url='https://icodeshequ.youdao.com/api/works/comment', data=str('{"id":"'+urll+'","content":"'+text[k] + '"}').encode("utf-8"), headers=get_headers(
-            '"'+"https://icodeshequ.youdao.com/work/" + urll + "?from=home"+'"'))
+        print(requests.post(url='https://icodeshequ.youdao.com/api/works/comment', data=str('{"id":"'+urll+'","content":"'+text[k] + '"}').encode('GB2312')  , headers=get_headers(
+            '"'+"https://icodeshequ.youdao.com/work/" + urll + "?from=home"+'"')).json())
         i += 1
         print("已发送"+str(i)+"次刷屏请求（实际为五秒刷一次）")
 
